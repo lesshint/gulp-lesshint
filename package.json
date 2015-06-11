@@ -22,7 +22,7 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "gulp-util": "^3.0.5",
-    "lesshint": "^0.6.2",
+    "lesshint": "^0.7.0-beta3",
     "through2": "^0.6.5"
   },
   "devDependencies": {

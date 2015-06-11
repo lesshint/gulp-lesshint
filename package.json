@@ -1,7 +1,7 @@
 {
   "name": "gulp-lesshint",
   "version": "0.1.0",
-  "description": "Gulp plugin for lesshint.",
+  "description": "Lint your .less files from Gulp with lesshint.",
   "main": "index.js",
   "author": {
     "name": "Jonathan Wilsson",
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "pretest": "jshint *.js && jscs *.js",
-    "test": ""
+    "test": "mocha"
   },
   "keywords": [
     "gulp",
@@ -28,6 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "jscs": "^1.13.1",
-    "jshint": "^2.8.0"
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5"
   }
 }

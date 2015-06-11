@@ -1,0 +1,18 @@
+sudo: false
+
+language: node_js
+node_js:
+  - "0.10"
+  - "0.12"
+  - "iojs-v1"
+  - "iojs-v2"
+
+before_script:
+  - node --version
+  - npm --version
+
+script:
+  - npm test
+
+matrix:
+  fast_finish: true

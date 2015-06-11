@@ -1,0 +1,32 @@
+{
+  "name": "gulp-lesshint",
+  "version": "0.1.0",
+  "description": "Gulp plugin for lesshint.",
+  "main": "index.js",
+  "author": {
+    "name": "Jonathan Wilsson",
+    "email": "jonathan.wilsson@gmail.com"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "gulp",
+    "gulpplugin",
+    "less",
+    "lesshint",
+    "lint",
+    "linter"
+  ],
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "gulp-util": "^3.0.5",
+    "lesshint": "^0.6.2",
+    "through2": "^0.6.5"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0"
+  }
+}

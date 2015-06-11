@@ -12,15 +12,14 @@ module.exports = function (options) {
 
     options = options || {};
 
-    if (options.lesshintrc === true) {
-        // let lesshint find the options itself
+    if (options.configPath) {
+        options = configLoader(options.configPath);
+    } else {
+        // Let lesshint find the options itself (from a .lesshintrc file)
         options = configLoader();
-    } else if (options.lesshintrc) {
-        // Read Lesshint options from a specified .lesshintrc file.
-        options = configLoader(options.lesshintrc);
     }
 
-    lesshint.configure(options || {});
+    lesshint.configure(options);
 
     return through.obj(function (file, enc, cb) {
         var contents;
@@ -28,16 +27,19 @@ module.exports = function (options) {
 
         if (file.isNull()) {
             cb(null, file);
+
             return;
         }
 
         if (file.isStream()) {
             cb(new gutil.PluginError('gulp-lesshint', 'Streaming not supported'));
+
             return;
         }
 
         if (lesshint.isExcluded(file.path)) {
             cb(null, file);
+
             return;
         }
 
@@ -51,7 +53,7 @@ module.exports = function (options) {
                 errors: []
             };
 
-            if (errors.length > 0) {
+            if (errors.length) {
                 file.lesshint.success = false;
                 file.lesshint.errorCount = errors.length;
                 file.lesshint.errors = errors;
@@ -81,7 +83,7 @@ module.exports = function (options) {
 
         cb(null, file);
     }, function (cb) {
-        if (out.length > 0) {
+        if (out.length) {
             this.emit('error', new gutil.PluginError('gulp-lesshint', out.join('\n'), {
                 showStack: false
             }));

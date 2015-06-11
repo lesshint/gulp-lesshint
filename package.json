@@ -7,6 +7,10 @@
     "name": "Jonathan Wilsson",
     "email": "jonathan.wilsson@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jwilsson/gulp-lesshint.git"
+  },
   "scripts": {
     "pretest": "jshint *.js && jscs *.js",
     "test": "mocha"
@@ -30,5 +34,8 @@
     "jshint": "^2.8.0",
     "mocha": "^2.2.5"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwilsson/gulp-lesshint/issues"
+  }
 }

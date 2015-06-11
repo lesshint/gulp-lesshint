@@ -27,35 +27,35 @@ module.exports = function (options) {
         var errors;
 
         if (file.isNull()) {
-			cb(null, file);
-			return;
-		}
+            cb(null, file);
+            return;
+        }
 
-		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-lesshint', 'Streaming not supported'));
-			return;
-		}
+        if (file.isStream()) {
+            cb(new gutil.PluginError('gulp-lesshint', 'Streaming not supported'));
+            return;
+        }
 
-		if (lesshint.isExcluded(file.path)) {
-			cb(null, file);
-			return;
-		}
+        if (lesshint.isExcluded(file.path)) {
+            cb(null, file);
+            return;
+        }
 
         try {
             contents = file.contents.toString();
             errors = lesshint.checkString(contents, file.relative);
 
             file.lesshint = {
-				success: true,
-				errorCount: 0,
-				errors: []
-			};
+                success: true,
+                errorCount: 0,
+                errors: []
+            };
 
-			if (errors.length > 0) {
-				file.lesshint.success = false;
-				file.lesshint.errorCount = errors.length;
-				file.lesshint.errors = errors;
-			}
+            if (errors.length > 0) {
+                file.lesshint.success = false;
+                file.lesshint.errorCount = errors.length;
+                file.lesshint.errors = errors;
+            }
 
             errors.forEach(function (error) {
                 var output = '';
@@ -73,8 +73,8 @@ module.exports = function (options) {
                 output += chalk.green(error.linter) + ': ';
                 output += error.message;
 
-				out.push(output);
-			});
+                out.push(output);
+            });
         } catch (e) {
             out.push(e.stack.replace('null:', file.relative + ':'));
         }
@@ -82,10 +82,10 @@ module.exports = function (options) {
         cb(null, file);
     }, function (cb) {
         if (out.length > 0) {
-			this.emit('error', new gutil.PluginError('gulp-lesshint', out.join('\n'), {
-				showStack: false
-			}));
-		}
+            this.emit('error', new gutil.PluginError('gulp-lesshint', out.join('\n'), {
+                showStack: false
+            }));
+        }
 
         cb();
     });

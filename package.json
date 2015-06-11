@@ -8,6 +8,7 @@
     "email": "jonathan.wilsson@gmail.com"
   },
   "scripts": {
+    "pretest": "jshint *.js && jscs *.js",
     "test": ""
   },
   "keywords": [

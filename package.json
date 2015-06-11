@@ -25,10 +25,10 @@
     "lesshint": "^0.6.2",
     "through2": "^0.6.5"
   },
-  "license": "MIT",
   "devDependencies": {
     "jscs": "^1.13.1",
     "jshint": "^2.8.0",
     "mocha": "^2.2.5"
-  }
+  },
+  "license": "MIT"
 }

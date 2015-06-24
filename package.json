@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jwilsson/gulp-lesshint.git"
+    "url": "https://github.com/lesshint/gulp-lesshint.git"
   },
   "scripts": {
     "pretest": "jshint *.js && jscs *.js",
@@ -36,6 +36,6 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jwilsson/gulp-lesshint/issues"
+    "url": "https://github.com/lesshint/gulp-lesshint/issues"
   }
 }

@@ -1,5 +1,5 @@
 # gulp-lesshint
-[![Build Status](https://travis-ci.org/jwilsson/gulp-lesshint.svg?branch=master)](https://travis-ci.org/jwilsson/gulp-lesshint)
+[![Build Status](https://travis-ci.org/lesshint/gulp-lesshint.svg?branch=master)](https://travis-ci.org/lesshint/gulp-lesshint)
 
 ## Installation
 ```bash

@@ -1,3 +1,5 @@
 {
+    "excludedFiles": ["exclude.less"],
+
     "spaceBeforeBrace": false
 }

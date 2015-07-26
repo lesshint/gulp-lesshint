@@ -3,6 +3,7 @@
 var assert = require('assert');
 var gutil = require('gulp-util');
 var lesshint = require('../');
+var Stream = require('stream');
 
 it('should check less files', function (cb) {
     var stream = lesshint();
@@ -67,6 +68,46 @@ it('should load file specified in configPath', function (cb) {
     stream.write(new gutil.File({
         base: __dirname,
         path: __dirname + '/fixture.less',
+        contents: new Buffer('.foo{ color: red; } \n')
+    }));
+
+    stream.end();
+});
+
+it('should ignore null files', function () {
+    var stream = lesshint();
+
+    stream.write(new gutil.File({
+        base: __dirname,
+        path: __dirname + '/fixture.less',
+        contents: null
+    }));
+
+    stream.end();
+});
+
+it('should ignore streams', function () {
+    var stream = lesshint();
+
+    assert.throws(function () {
+        stream.write(new gutil.File({
+            base: __dirname,
+            path: __dirname + '/fixture.less',
+            contents: new Stream()
+        }));
+    }, gutil.PluginError);
+
+    stream.end();
+});
+
+it('should ignore excluded files', function () {
+    var stream = lesshint({
+        configPath: './test/config.json'
+    });
+
+    stream.write(new gutil.File({
+        base: __dirname,
+        path: __dirname + '/exclude.less',
         contents: new Buffer('.foo{ color: red; } \n')
     }));
 

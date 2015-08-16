@@ -19,13 +19,13 @@ it('should check less files', function (cb) {
     stream.write(new gutil.File({
         base: __dirname,
         path: __dirname + '/fixture.less',
-        contents: new Buffer('.foo{ color: red; } \n')
+        contents: new Buffer('.foo{\ncolor: red;\n}\n')
     }));
 
     stream.write(new gutil.File({
         base: __dirname,
         path: __dirname + '/fixture2.less',
-        contents: new Buffer('.foo { color:red; } \n')
+        contents: new Buffer('.foo {\ncolor:red;\n}\n')
     }));
 
     stream.end();
@@ -44,7 +44,7 @@ it('should allow valid files', function (cb) {
 
     stream.write(new gutil.File({
         path: __dirname + '/fixture.less',
-        contents: new Buffer('.foo { color: red; } \n')
+        contents: new Buffer('.foo {\ncolor: red;\n}\n')
     }));
 
     stream.end();
@@ -68,7 +68,7 @@ it('should load file specified in configPath', function (cb) {
     stream.write(new gutil.File({
         base: __dirname,
         path: __dirname + '/fixture.less',
-        contents: new Buffer('.foo{ color: red; } \n')
+        contents: new Buffer('.foo {\ncolor: red;\n}\n')
     }));
 
     stream.end();
@@ -108,7 +108,7 @@ it('should ignore excluded files', function () {
     stream.write(new gutil.File({
         base: __dirname,
         path: __dirname + '/exclude.less',
-        contents: new Buffer('.foo{ color: red; } \n')
+        contents: new Buffer('.foo{\ncolor: red;\n}\n')
     }));
 
     stream.end();

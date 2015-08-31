@@ -6,6 +6,7 @@
     "maximumLineLength": null,
     "validateIndentation": 4,
 
+    "disallowDanglingUnderscores": true,
     "disallowSpacesInAnonymousFunctionExpression": null,
     "disallowSpacesInFunctionExpression": null,
     "requireSpacesInFunction": {

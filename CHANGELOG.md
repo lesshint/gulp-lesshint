@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0 (2015-08-31)
+* Updated `lesshint` to `0.9.0`.
+
 ## 0.3.0 (2015-08-16)
 * Updated `lesshint` to `0.8.0`.
 * Updated other dependencies.

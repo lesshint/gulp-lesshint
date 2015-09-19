@@ -23,7 +23,7 @@ module.exports = function (options) {
 
     return through.obj(function (file, enc, cb) {
         var contents;
-        var errors;
+        var results;
 
         if (file.isNull()) {
             cb(null, file);
@@ -45,35 +45,35 @@ module.exports = function (options) {
 
         try {
             contents = file.contents.toString();
-            errors = lesshint.checkString(contents, file.relative);
+            results = lesshint.checkString(contents, file.relative);
 
             file.lesshint = {
                 success: true,
-                errorCount: 0,
-                errors: []
+                resultCount: 0,
+                results: []
             };
 
-            if (errors.length) {
+            if (results.length) {
                 file.lesshint.success = false;
-                file.lesshint.errorCount = errors.length;
-                file.lesshint.errors = errors;
+                file.lesshint.resultCount = results.length;
+                file.lesshint.results = results;
             }
 
-            errors.forEach(function (error) {
+            results.forEach(function (result) {
                 var output = '';
 
-                output += chalk.cyan(error.file) + ': ';
+                output += chalk.cyan(result.file) + ': ';
 
-                if (error.line) {
-                    output += chalk.magenta('line ' + error.line) + ', ';
+                if (result.line) {
+                    output += chalk.magenta('line ' + result.line) + ', ';
                 }
 
-                if (error.column) {
-                    output += chalk.magenta('col ' + error.column) + ', ';
+                if (result.column) {
+                    output += chalk.magenta('col ' + result.column) + ', ';
                 }
 
-                output += chalk.green(error.linter) + ': ';
-                output += error.message;
+                output += chalk.green(result.linter) + ': ';
+                output += result.message;
 
                 out.push(output);
             });

@@ -25,21 +25,15 @@ var lesshintPlugin = function (options) {
         var results;
 
         if (file.isNull()) {
-            cb(null, file);
-
-            return;
+            return cb(null, file);
         }
 
         if (file.isStream()) {
-            cb(new gutil.PluginError('gulp-lesshint', 'Streaming not supported'));
-
-            return;
+            return cb(new gutil.PluginError('gulp-lesshint', 'Streaming not supported'));
         }
 
         if (lesshint.isExcluded(file.path)) {
-            cb(null, file);
-
-            return;
+            return cb(null, file);
         }
 
         try {

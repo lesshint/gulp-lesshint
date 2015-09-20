@@ -3,15 +3,14 @@
 var assert = require('assert');
 var gutil = require('gulp-util');
 var lesshint = require('../');
+var sinon = require('sinon');
 var Stream = require('stream');
 
 it('should check less files', function (cb) {
     var stream = lesshint();
 
-    stream.on('data', function (error) {
-        if (/spaceBeforeBrace/.test(error) && /spaceAfterPropertyColon/.test(error)) {
-            assert(true);
-        }
+    stream.on('data', function (file) {
+        assert.strictEqual(file.lesshint.success, false);
     });
 
     stream.on('end', cb);
@@ -48,6 +47,39 @@ it('should allow valid files', function (cb) {
     }));
 
     stream.end();
+});
+
+it('should log results', function (cb) {
+    var lintStream = lesshint();
+    var reporterStream = lesshint.reporter();
+
+    sinon.stub(gutil, 'log');
+
+    lintStream.on('data', function (file) {
+        reporterStream.write(file);
+    });
+
+    lintStream.once('end', function () {
+        reporterStream.end();
+    });
+
+    reporterStream.on('data', function () {});
+
+    reporterStream.once('end', function () {
+        sinon.assert.calledOnce(gutil.log);
+
+        gutil.log.restore();
+
+        cb();
+    });
+
+    lintStream.write(new gutil.File({
+        base: __dirname,
+        path: __dirname + '/fixture.less',
+        contents: new Buffer('.foo{\ncolor: red;\n}\n')
+    }));
+
+    lintStream.end();
 });
 
 it('should load file specified in configPath', function (cb) {

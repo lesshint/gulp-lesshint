@@ -5,7 +5,7 @@ var through = require('through2');
 var Lesshint = require('lesshint');
 var configLoader = require('lesshint/lib/config-loader');
 
-module.exports = function (options) {
+var lesshintPlugin = function (options) {
     var lesshint = new Lesshint();
     var error;
 
@@ -23,7 +23,6 @@ module.exports = function (options) {
     return through.obj(function (file, enc, cb) {
         var contents;
         var results;
-        var out = [];
 
         if (file.isNull()) {
             cb(null, file);
@@ -58,8 +57,28 @@ module.exports = function (options) {
                 file.lesshint.resultCount = results.length;
                 file.lesshint.results = results;
             }
+        } catch (e) {
+            error = e.stack.replace('null:', file.relative + ':');
+        }
 
-            results.forEach(function (result) {
+        cb(null, file);
+    }, function (cb) {
+        if (error) {
+            this.emit('error', new gutil.PluginError('gulp-lesshint', error, {
+                showStack: false
+            }));
+        }
+
+        cb();
+    });
+};
+
+lesshintPlugin.reporter = function () {
+    return through.obj(function (file, enc, cb) {
+        var out = [];
+
+        if (file.lesshint && !file.lesshint.success) {
+            file.lesshint.results.forEach(function (result) {
                 var output = '';
 
                 output += gutil.colors.cyan(result.file) + ': ';
@@ -77,22 +96,14 @@ module.exports = function (options) {
 
                 out.push(output);
             });
-        } catch (e) {
-            error = e.stack.replace('null:', file.relative + ':');
+
+            if (out.length) {
+                gutil.log(out.join('\n'));
+            }
         }
 
-        if (out.length) {
-            gutil.log(out.join('\n'));
-        }
-
-        cb(null, file);
-    }, function (cb) {
-        if (error) {
-            this.emit('error', new gutil.PluginError('gulp-lesshint', error, {
-                showStack: false
-            }));
-        }
-
-        cb();
+        return cb(null, file);
     });
 };
+
+module.exports = lesshintPlugin;

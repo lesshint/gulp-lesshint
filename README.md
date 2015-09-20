@@ -15,7 +15,8 @@ gulp.task('lint', function() {
     return gulp.src('./src/*.less')
         .pipe(lesshint({
             // Options
-        }));
+        }))
+        .pipe(lesshint.reporter()); // Or another custom reporter
 });
 ```
 

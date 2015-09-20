@@ -31,7 +31,8 @@
   "devDependencies": {
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "sinon": "^1.16.1"
   },
   "license": "MIT",
   "bugs": {

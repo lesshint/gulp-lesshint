@@ -12,10 +12,10 @@ var gulp = require('gulp');
 var lesshint = require('gulp-lesshint');
 
 gulp.task('lint', function() {
-  return gulp.src('./src/*.less')
-    .pipe(lesshint({
-        // Options
-    }))
+    return gulp.src('./src/*.less')
+        .pipe(lesshint({
+            // Options
+        }));
 });
 ```
 
@@ -28,6 +28,6 @@ The following properties will be added to the `file` object.
 
 ```js
 file.lesshint.success = true; // or false
-file.lesshint.errorCount = 0; // number of errors returned by lesshint
-file.lesshint.errors = []; // lesshint errors
+file.lesshint.resultCount = 0; // number of results returned by lesshint
+file.lesshint.results = []; // lesshint results
 ```

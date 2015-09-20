@@ -2,7 +2,6 @@
 
 var gutil = require('gulp-util');
 var through = require('through2');
-var chalk = require('chalk');
 var Lesshint = require('lesshint');
 var configLoader = require('lesshint/lib/config-loader');
 
@@ -62,17 +61,17 @@ module.exports = function (options) {
             results.forEach(function (result) {
                 var output = '';
 
-                output += chalk.cyan(result.file) + ': ';
+                output += gutil.colors.cyan(result.file) + ': ';
 
                 if (result.line) {
-                    output += chalk.magenta('line ' + result.line) + ', ';
+                    output += gutil.colors.magenta('line ' + result.line) + ', ';
                 }
 
                 if (result.column) {
-                    output += chalk.magenta('col ' + result.column) + ', ';
+                    output += gutil.colors.magenta('col ' + result.column) + ', ';
                 }
 
-                output += chalk.green(result.linter) + ': ';
+                output += gutil.colors.green(result.linter) + ': ';
                 output += result.message;
 
                 out.push(output);

@@ -7,7 +7,7 @@ var configLoader = require('lesshint/lib/config-loader');
 
 module.exports = function (options) {
     var lesshint = new Lesshint();
-    var out = [];
+    var error;
 
     options = options || {};
 
@@ -23,6 +23,7 @@ module.exports = function (options) {
     return through.obj(function (file, enc, cb) {
         var contents;
         var results;
+        var out = [];
 
         if (file.isNull()) {
             cb(null, file);
@@ -77,13 +78,17 @@ module.exports = function (options) {
                 out.push(output);
             });
         } catch (e) {
-            out.push(e.stack.replace('null:', file.relative + ':'));
+            error = e.stack.replace('null:', file.relative + ':');
+        }
+
+        if (out.length) {
+            gutil.log(out.join('\n'));
         }
 
         cb(null, file);
     }, function (cb) {
-        if (out.length) {
-            this.emit('error', new gutil.PluginError('gulp-lesshint', out.join('\n'), {
+        if (error) {
+            this.emit('error', new gutil.PluginError('gulp-lesshint', error, {
                 showStack: false
             }));
         }

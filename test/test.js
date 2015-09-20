@@ -8,13 +8,13 @@ var Stream = require('stream');
 it('should check less files', function (cb) {
     var stream = lesshint();
 
-    stream.on('error', function (error) {
+    stream.on('data', function (error) {
         if (/spaceBeforeBrace/.test(error) && /spaceAfterPropertyColon/.test(error)) {
             assert(true);
-
-            cb();
         }
     });
+
+    stream.on('end', cb);
 
     stream.write(new gutil.File({
         base: __dirname,

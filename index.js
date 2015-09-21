@@ -55,7 +55,7 @@ var lesshintPlugin = function (options) {
             error = e.stack.replace('null:', file.relative + ':');
         }
 
-        cb(null, file);
+        return cb(null, file);
     }, function (cb) {
         if (error) {
             this.emit('error', new gutil.PluginError('gulp-lesshint', error, {
@@ -63,7 +63,7 @@ var lesshintPlugin = function (options) {
             }));
         }
 
-        cb();
+        return cb();
     });
 };
 

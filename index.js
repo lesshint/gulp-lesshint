@@ -41,9 +41,9 @@ var lesshintPlugin = function (options) {
             results = lesshint.checkString(contents, file.relative);
 
             file.lesshint = {
-                success: true,
                 resultCount: 0,
-                results: []
+                results: [],
+                success: true,
             };
 
             if (results.length) {
@@ -59,7 +59,7 @@ var lesshintPlugin = function (options) {
     }, function (cb) {
         if (error) {
             this.emit('error', new gutil.PluginError('gulp-lesshint', error, {
-                showStack: false
+                showStack: false,
             }));
         }
 

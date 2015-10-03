@@ -1,14 +1,17 @@
 {
     "preset": "google",
 
-    "disallowMultipleVarDecl": "strict",
-
     "maximumLineLength": null,
-    "validateIndentation": 4,
 
     "disallowDanglingUnderscores": true,
+    "disallowMultipleVarDecl": "strict",
+    "disallowPaddingNewlinesInBlocks": true,
     "disallowSpacesInAnonymousFunctionExpression": null,
+    "disallowSpacesInFunctionDeclaration": null,
     "disallowSpacesInFunctionExpression": null,
+
+    "requireBlocksOnNewline": true,
+    "requireTrailingComma": true,
     "requireSpacesInFunction": {
         "beforeOpeningRoundBrace": true
     },
@@ -26,6 +29,7 @@
         "function"
     ],
 
+    "validateIndentation": 4,
     "validateQuoteMarks": {
         "escape": true,
         "mark": "'"

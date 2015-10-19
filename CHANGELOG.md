@@ -1,4 +1,9 @@
 # Changelog
+### 1.0.0 (2015-10-19)
+* Updated to `lesshint` `1.0`.
+* Errors are no longer emitted to the stream.
+* The `errors` property on each file in the stream are now called `results`.
+* Moved logging to its own reporter.
 
 ## 0.4.0 (2015-08-31)
 * Updated `lesshint` to `0.9.0`.

@@ -55,7 +55,9 @@ var lesshintPlugin = function (options) {
             error = e.stack.replace('null:', file.relative + ':');
         }
 
-        return cb(null, file);
+        this.push(file);
+
+        return cb();
     }, function (cb) {
         if (error) {
             this.emit('error', new PluginError('gulp-lesshint', error, {

@@ -75,6 +75,12 @@ lesshintPlugin.reporter = function () {
             file.lesshint.results.forEach(function (result) {
                 var output = '';
 
+                if (result.severity === 'error') {
+                    output += gutil.colors.red('Error: ');
+                } else {
+                    output += gutil.colors.yellow('Warning: ');
+                }
+
                 output += gutil.colors.cyan(result.file) + ': ';
 
                 if (result.line) {

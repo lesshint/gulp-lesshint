@@ -1,4 +1,13 @@
 # Changelog
+## 2.0.0-rc (2016-05-17)
+* Updated `lesshint` to `2.0.0-rc`.
+* Files are now pushed downwards in the stream.
+* Replaced the default reporter with `lesshint-reporter-stylish` which looks the same.
+* It's now possible to load any reporter in the `lesshint.reporter()` call.
+* Replaced `gulp-util` with smaller dependencies.
+* Replaced `JSHint` and `JSCS` with `ESLint`.
+* Dropped support for Node `0.10`.
+
 ## 1.1.0 (2016-02-21)
 * The default reporter now also outputs the result severity.
 

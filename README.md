@@ -1,6 +1,9 @@
 # gulp-lesshint
 [![Build Status](https://travis-ci.org/lesshint/gulp-lesshint.svg?branch=master)](https://travis-ci.org/lesshint/gulp-lesshint)
 
+**Help us out with testing `2.0`, install with `npm install gulp-lesshint@next`.**
+**Please report all issues related to column/line numbers on the [main lesshint repo](https://github.com/lesshint/lesshint). Thanks!**
+
 ## Installation
 ```bash
 npm install gulp-lesshint --save-dev

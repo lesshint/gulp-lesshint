@@ -12,7 +12,7 @@
     "url": "https://github.com/lesshint/gulp-lesshint.git"
   },
   "scripts": {
-    "pretest": "jshint *.js && jscs *.js",
+    "pretest": "eslint *.js",
     "test": "mocha"
   },
   "keywords": [
@@ -29,8 +29,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "jscs": "^2.0.0",
-    "jshint": "^2.8.0",
+    "eslint": "^2.10.2",
     "mocha": "^2.2.5",
     "sinon": "^1.16.1"
   },

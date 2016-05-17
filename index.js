@@ -1,9 +1,9 @@
 'use strict';
 
-var gutil = require('gulp-util');
-var through = require('through2');
-var Lesshint = require('lesshint');
 var configLoader = require('lesshint/lib/config-loader');
+var PluginError = require('plugin-error');
+var Lesshint = require('lesshint');
+var through = require('through2');
 
 var lesshintPlugin = function (options) {
     var lesshint = new Lesshint();
@@ -29,7 +29,7 @@ var lesshintPlugin = function (options) {
         }
 
         if (file.isStream()) {
-            return cb(new gutil.PluginError('gulp-lesshint', 'Streaming not supported'));
+            return cb(new PluginError('gulp-lesshint', 'Streaming not supported'));
         }
 
         if (lesshint.isExcluded(file.path)) {
@@ -58,7 +58,7 @@ var lesshintPlugin = function (options) {
         return cb(null, file);
     }, function (cb) {
         if (error) {
-            this.emit('error', new gutil.PluginError('gulp-lesshint', error, {
+            this.emit('error', new PluginError('gulp-lesshint', error, {
                 showStack: false,
             }));
         }

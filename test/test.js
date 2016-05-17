@@ -1,10 +1,11 @@
 'use strict';
 
-var assert = require('assert');
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
 var lesshint = require('../');
-var sinon = require('sinon');
+var assert = require('assert');
 var Stream = require('stream');
+var sinon = require('sinon');
+var File = require('vinyl');
 
 describe('gulp-lesshint', function () {
     beforeEach(function () {
@@ -26,13 +27,13 @@ describe('gulp-lesshint', function () {
 
         stream.on('end', cb);
 
-        stream.write(new gutil.File({
+        stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
             contents: new Buffer('.foo{\ncolor: red;\n}\n')
         }));
 
-        stream.write(new gutil.File({
+        stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture2.less',
             contents: new Buffer('.foo {\ncolor:red;\n}\n')
@@ -52,7 +53,7 @@ describe('gulp-lesshint', function () {
 
         stream.on('end', cb);
 
-        stream.write(new gutil.File({
+        stream.write(new File({
             path: __dirname + '/fixture.less',
             contents: new Buffer('.foo {\ncolor: red;\n}\n')
         }));
@@ -82,7 +83,7 @@ describe('gulp-lesshint', function () {
             cb();
         });
 
-        lintStream.write(new gutil.File({
+        lintStream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
             contents: new Buffer('.foo{\ncolor: red;\n}\n')
@@ -106,7 +107,7 @@ describe('gulp-lesshint', function () {
 
         stream.on('end', cb);
 
-        stream.write(new gutil.File({
+        stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
             contents: new Buffer('.foo {\ncolor: red;\n}\n')
@@ -118,7 +119,7 @@ describe('gulp-lesshint', function () {
     it('should ignore null files', function () {
         var stream = lesshint();
 
-        stream.write(new gutil.File({
+        stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
             contents: null
@@ -131,12 +132,12 @@ describe('gulp-lesshint', function () {
         var stream = lesshint();
 
         assert.throws(function () {
-            stream.write(new gutil.File({
+            stream.write(new File({
                 base: __dirname,
                 path: __dirname + '/fixture.less',
                 contents: new Stream()
             }));
-        }, gutil.PluginError);
+        }, PluginError);
 
         stream.end();
     });
@@ -146,7 +147,7 @@ describe('gulp-lesshint', function () {
             configPath: './test/config.json'
         });
 
-        stream.write(new gutil.File({
+        stream.write(new File({
             base: __dirname,
             path: __dirname + '/exclude.less',
             contents: new Buffer('.foo{\ncolor: red;\n}\n')

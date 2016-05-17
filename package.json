@@ -24,15 +24,16 @@
     "linter"
   ],
   "dependencies": {
-    "gulp-util": "^3.0.5",
     "lesshint": "^2.0.0-rc",
     "lesshint-reporter-stylish": "^1.0.0",
+    "plugin-error": "^0.1.2",
     "through2": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^2.10.2",
     "mocha": "^2.2.5",
-    "sinon": "^1.16.1"
+    "sinon": "^1.16.1",
+    "vinyl": "^1.1.1"
   },
   "license": "MIT",
   "bugs": {

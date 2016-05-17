@@ -67,39 +67,18 @@ var lesshintPlugin = function (options) {
     });
 };
 
-lesshintPlugin.reporter = function () {
+lesshintPlugin.reporter = function (reporter) {
+    var lesshint = new Lesshint();
+
+    if (reporter) {
+        reporter = lesshint.getReporter();
+    } else {
+        reporter = require('lesshint-reporter-stylish');
+    }
+
     return through.obj(function (file, enc, cb) {
-        var out = [];
-
         if (file.lesshint && !file.lesshint.success) {
-            file.lesshint.results.forEach(function (result) {
-                var output = '';
-
-                if (result.severity === 'error') {
-                    output += gutil.colors.red('Error: ');
-                } else {
-                    output += gutil.colors.yellow('Warning: ');
-                }
-
-                output += gutil.colors.cyan(result.file) + ': ';
-
-                if (result.line) {
-                    output += gutil.colors.magenta('line ' + result.line) + ', ';
-                }
-
-                if (result.column) {
-                    output += gutil.colors.magenta('col ' + result.column) + ', ';
-                }
-
-                output += gutil.colors.green(result.linter) + ': ';
-                output += result.message;
-
-                out.push(output);
-            });
-
-            if (out.length) {
-                gutil.log(out.join('\n'));
-            }
+            reporter.report(file.lesshint.results);
         }
 
         return cb(null, file);

@@ -23,6 +23,9 @@
     "lint",
     "linter"
   ],
+  "files": [
+      "index.js"
+  ],
   "dependencies": {
     "lesshint": "^2.0.0-rc",
     "lesshint-reporter-stylish": "^1.0.0",

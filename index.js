@@ -73,7 +73,7 @@ lesshintPlugin.reporter = function (reporter) {
     var lesshint = new Lesshint();
 
     if (reporter) {
-        reporter = lesshint.getReporter();
+        reporter = lesshint.getReporter(reporter);
     } else {
         reporter = require('lesshint-reporter-stylish');
     }

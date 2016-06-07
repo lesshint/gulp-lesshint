@@ -10,6 +10,8 @@ npm install gulp-lesshint --save-dev
 ```
 
 ## Usage
+*Note: These docs are for `2.x`. To view the `1.x` docs [please click here](https://github.com/lesshint/gulp-lesshint/blob/cf49de36acc583fdbde8861132c56b798ee4f624/README.md).*
+
 ```js
 var gulp = require('gulp');
 var lesshint = require('gulp-lesshint');

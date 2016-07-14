@@ -38,7 +38,7 @@ var lesshintPlugin = function (options) {
 
         try {
             contents = file.contents.toString();
-            results = lesshint.checkString(contents, file.relative);
+            results = lesshint.checkString(contents, file.path);
 
             file.lesshint = {
                 resultCount: 0,
@@ -52,7 +52,7 @@ var lesshintPlugin = function (options) {
                 file.lesshint.results = results;
             }
         } catch (e) {
-            error = e.stack.replace('null:', file.relative + ':');
+            error = e.stack.replace('null:', file.path + ':');
         }
 
         this.push(file);

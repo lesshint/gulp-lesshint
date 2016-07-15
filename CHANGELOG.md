@@ -1,5 +1,12 @@
 # Changelog
+## 2.0.0 (2016-07-15)
+* **This release contains possible breaking changes. Check this list before updating.**
+* Updated `lesshint` to `2.0.0`.
+* Reporters are now called at the end of the stream with complete lint results.
+* The `fullPath` property in lint result objects passed to reporters are now the full path and not a relative one.
+
 ## 2.0.0-rc (2016-05-17)
+* **This release contains possible breaking changes. Check this list before updating.**
 * Updated `lesshint` to `2.0.0-rc`.
 * Files are now pushed downwards in the stream.
 * Replaced the default reporter with `lesshint-reporter-stylish` which looks the same.

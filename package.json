@@ -1,6 +1,6 @@
 {
   "name": "gulp-lesshint",
-  "version": "2.0.0-rc",
+  "version": "2.0.0",
   "description": "Lint your .less files from Gulp with lesshint.",
   "main": "index.js",
   "author": {

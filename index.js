@@ -38,7 +38,7 @@ var lesshintPlugin = function (options) {
 
         try {
             contents = file.contents.toString();
-            results = lesshint.checkString(contents, file.relative);
+            results = lesshint.checkString(contents, file.path);
 
             file.lesshint = {
                 resultCount: 0,
@@ -52,7 +52,7 @@ var lesshintPlugin = function (options) {
                 file.lesshint.results = results;
             }
         } catch (e) {
-            error = e.stack.replace('null:', file.relative + ':');
+            error = e.stack.replace('null:', file.path + ':');
         }
 
         this.push(file);
@@ -71,6 +71,7 @@ var lesshintPlugin = function (options) {
 
 lesshintPlugin.reporter = function (reporter) {
     var lesshint = new Lesshint();
+    var results = [];
 
     if (reporter) {
         reporter = lesshint.getReporter(reporter);
@@ -80,10 +81,14 @@ lesshintPlugin.reporter = function (reporter) {
 
     return through.obj(function (file, enc, cb) {
         if (file.lesshint && !file.lesshint.success) {
-            reporter.report(file.lesshint.results);
+            results = results.concat(file.lesshint.results);
         }
 
         return cb(null, file);
+    }, function (cb) {
+        reporter.report(results);
+
+        return cb();
     });
 };
 

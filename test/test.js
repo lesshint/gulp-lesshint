@@ -80,6 +80,8 @@ describe('gulp-lesshint', function () {
         reporterStream.once('end', function () {
             assert.ok(console.log.called);
 
+            console.log.restore();
+
             cb();
         });
 
@@ -114,6 +116,37 @@ describe('gulp-lesshint', function () {
         }));
 
         stream.end();
+    });
+
+    it('should emit errors when asked to', function (cb) {
+        var lintStream = lesshint({
+            configPath: './test/config.json'
+        });
+        var failStream = lesshint.failOnError();
+
+        lintStream.on('data', function (file) {
+            failStream.write(file);
+        });
+
+        lintStream.once('end', function () {
+            failStream.end();
+        });
+
+        failStream.on('data', function () {});
+
+        failStream.on('error', function (error) {
+            assert.equal(error.name, 'LesshintError');
+
+            cb();
+        });
+
+        lintStream.write(new File({
+            base: __dirname,
+            path: __dirname + '/fixture.less',
+            contents: new Buffer('.foo {\ncolor:red;\n}\n')
+        }));
+
+        lintStream.end();
     });
 
     it('should ignore null files', function () {

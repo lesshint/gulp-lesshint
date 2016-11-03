@@ -16,13 +16,18 @@ gulp.task('lint', function() {
         .pipe(lesshint({
             // Options
         }))
-        .pipe(lesshint.reporter('reporter-name')); // Leave empty to use the default, "stylish"
+        .pipe(lesshint.reporter('reporter-name')) // Leave empty to use the default, "stylish"
+        .pipe(lesshint.failOnError()); // Use this to fail the task on lint errors
 });
 ```
 
 ## Options
 * `configPath`
     * Pass a path to a valid configuration file and stop lesshint from looking for a `.lesshintrc` file.
+
+## API
+* `lesshint.failOnError()`
+    * Use this to fail the task when there are at least one lint result with a severity of `error`.
 
 ## Reporters
 If no reporter name is passed, the default `lesshint-reporter-stylish` will be used which just prints everything with different colors.

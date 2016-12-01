@@ -1,4 +1,8 @@
 # Changelog
+## 2.1.0 (2016-12-01)
+* Added failOnError method.
+* Tests are run on Node 7.
+
 ## 2.0.0 (2016-07-15)
 * **This release contains possible breaking changes. Check this list before updating.**
 * Updated `lesshint` to `2.0.0`.

@@ -92,4 +92,32 @@ lesshintPlugin.reporter = function (reporter) {
     });
 };
 
+lesshintPlugin.failOnError = function () {
+    var errorCount = 0;
+
+    return through.obj(function (file, enc, cb) {
+        file.lesshint.results.forEach(function (result) {
+            if (result.severity === 'error') {
+                errorCount++;
+            }
+        });
+
+        return cb(null, file);
+    }, function (cb) {
+        var message;
+
+        if (!errorCount) {
+            return;
+        }
+
+        message = 'Failed with ' + errorCount + (errorCount === 1 ? ' error' : ' errors');
+
+        this.emit('error', new PluginError('gulp-lesshint', message, {
+            name: 'LesshintError'
+        }));
+
+        return cb();
+    });
+};
+
 module.exports = lesshintPlugin;

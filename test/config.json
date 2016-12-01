@@ -1,5 +1,9 @@
 {
     "excludedFiles": ["exclude.less"],
 
-    "spaceBeforeBrace": false
+    "spaceBeforeBrace": false,
+    "spaceAfterPropertyColon": {
+        "enabled": true,
+        "severity": "error"
+    }
 }

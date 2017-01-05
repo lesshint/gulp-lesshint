@@ -1,27 +1,27 @@
 'use strict';
 
-var PluginError = require('plugin-error');
-var lesshint = require('../');
-var assert = require('assert');
-var Stream = require('stream');
-var sinon = require('sinon');
-var File = require('vinyl');
+const PluginError = require('plugin-error');
+const lesshint = require('../');
+const assert = require('assert');
+const Stream = require('stream');
+const sinon = require('sinon');
+const File = require('vinyl');
 
-describe('gulp-lesshint', function () {
-    beforeEach(function () {
+describe('gulp-lesshint', () => {
+    beforeEach(() => {
         sinon.stub(process.stdout, 'write');
     });
 
-    afterEach(function () {
+    afterEach(() => {
         if (process.stdout.write.restore) {
             process.stdout.write.restore();
         }
     });
 
-    it('should check less files', function (cb) {
-        var stream = lesshint();
+    it('should check less files', (cb) => {
+        const stream = lesshint();
 
-        stream.on('data', function (file) {
+        stream.on('data', (file) => {
             assert.strictEqual(file.lesshint.success, false);
         });
 
@@ -30,24 +30,32 @@ describe('gulp-lesshint', function () {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer('.foo{\ncolor: red;\n}\n')
+            contents: new Buffer(`
+                .foo{
+                    color: red;
+                }
+            `)
         }));
 
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture2.less',
-            contents: new Buffer('.foo {\ncolor:red;\n}\n')
+            contents: new Buffer(`
+                .foo {
+                    color:red;
+                }
+            `)
         }));
 
         stream.end();
     });
 
-    it('should allow valid files', function (cb) {
-        var stream = lesshint();
+    it('should allow valid files', (cb) => {
+        const stream = lesshint();
 
-        stream.on('data', function () {});
+        stream.on('data', () => {});
 
-        stream.on('error', function (error) {
+        stream.on('error', (error) => {
             assert(false);
         });
 
@@ -55,29 +63,33 @@ describe('gulp-lesshint', function () {
 
         stream.write(new File({
             path: __dirname + '/fixture.less',
-            contents: new Buffer('.foo {\ncolor: red;\n}\n')
+            contents: new Buffer(`
+                .foo {
+                    color: red;
+                }
+            `)
         }));
 
         stream.end();
     });
 
-    it('should log results when using the default reporter', function (cb) {
-        var lintStream = lesshint();
-        var reporterStream = lesshint.reporter();
+    it('should log results when using the default reporter', (cb) => {
+        const lintStream = lesshint();
+        const reporterStream = lesshint.reporter();
 
         sinon.spy(console, 'log');
 
-        lintStream.on('data', function (file) {
+        lintStream.on('data', (file) => {
             reporterStream.write(file);
         });
 
-        lintStream.once('end', function () {
+        lintStream.once('end', () => {
             reporterStream.end();
         });
 
-        reporterStream.on('data', function () {});
+        reporterStream.on('data', () => {});
 
-        reporterStream.once('end', function () {
+        reporterStream.once('end', () => {
             assert.ok(console.log.called);
 
             console.log.restore();
@@ -88,20 +100,24 @@ describe('gulp-lesshint', function () {
         lintStream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer('.foo{\ncolor: red;\n}\n')
+            contents: new Buffer(`
+                .foo{
+                    color: red;
+                }
+            `)
         }));
 
         lintStream.end();
     });
 
-    it('should load file specified in configPath', function (cb) {
-        var stream = lesshint({
+    it('should load file specified in configPath', (cb) => {
+        const stream = lesshint({
             configPath: './test/config.json'
         });
 
-        stream.on('data', function () {});
+        stream.on('data', () => {});
 
-        stream.on('error', function (error) {
+        stream.on('error', (error) => {
             assert(false);
 
             cb();
@@ -112,29 +128,33 @@ describe('gulp-lesshint', function () {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer('.foo {\ncolor: red;\n}\n')
+            contents: new Buffer(`
+                .foo {
+                    color: red;
+                }
+            `)
         }));
 
         stream.end();
     });
 
-    it('should emit errors when asked to', function (cb) {
-        var lintStream = lesshint({
+    it('should emit errors when asked to', (cb) => {
+        const lintStream = lesshint({
             configPath: './test/config.json'
         });
-        var failStream = lesshint.failOnError();
+        const failStream = lesshint.failOnError();
 
-        lintStream.on('data', function (file) {
+        lintStream.on('data', (file) => {
             failStream.write(file);
         });
 
-        lintStream.once('end', function () {
+        lintStream.once('end', () => {
             failStream.end();
         });
 
-        failStream.on('data', function () {});
+        failStream.on('data', () => {});
 
-        failStream.on('error', function (error) {
+        failStream.on('error', (error) => {
             assert.equal(error.name, 'LesshintError');
 
             cb();
@@ -143,14 +163,18 @@ describe('gulp-lesshint', function () {
         lintStream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer('.foo {\ncolor:red;\n}\n')
+            contents: new Buffer(`
+                .foo {
+                    color:red;
+                }
+            `)
         }));
 
         lintStream.end();
     });
 
-    it('should ignore null files', function () {
-        var stream = lesshint();
+    it('should ignore null files', () => {
+        const stream = lesshint();
 
         stream.write(new File({
             base: __dirname,
@@ -161,10 +185,10 @@ describe('gulp-lesshint', function () {
         stream.end();
     });
 
-    it('should ignore streams', function () {
-        var stream = lesshint();
+    it('should ignore streams', () => {
+        const stream = lesshint();
 
-        assert.throws(function () {
+        assert.throws(() => {
             stream.write(new File({
                 base: __dirname,
                 path: __dirname + '/fixture.less',
@@ -175,15 +199,19 @@ describe('gulp-lesshint', function () {
         stream.end();
     });
 
-    it('should ignore excluded files', function () {
-        var stream = lesshint({
+    it('should ignore excluded files', () => {
+        const stream = lesshint({
             configPath: './test/config.json'
         });
 
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/exclude.less',
-            contents: new Buffer('.foo{\ncolor: red;\n}\n')
+            contents: new Buffer(`
+                .foo{
+                    color: red;
+                }
+            `)
         }));
 
         stream.end();

@@ -8,10 +8,10 @@ npm install gulp-lesshint --save-dev
 
 ## Usage
 ```js
-var gulp = require('gulp');
-var lesshint = require('gulp-lesshint');
+const gulp = require('gulp');
+const lesshint = require('gulp-lesshint');
 
-gulp.task('lint', function() {
+gulp.task('lint', () => {
     return gulp.src('./src/*.less')
         .pipe(lesshint({
             // Options

@@ -1,13 +1,12 @@
 'use strict';
 
-var configLoader = require('lesshint/lib/config-loader');
-var PluginError = require('plugin-error');
-var Lesshint = require('lesshint');
-var through = require('through2');
+const configLoader = require('lesshint/lib/config-loader');
+const PluginError = require('plugin-error');
+const Lesshint = require('lesshint');
+const through = require('through2');
 
-var lesshintPlugin = function (options) {
-    var lesshint = new Lesshint();
-    var error;
+const lesshintPlugin = function (options) {
+    const lesshint = new Lesshint();
 
     options = options || {};
 
@@ -20,10 +19,9 @@ var lesshintPlugin = function (options) {
 
     lesshint.configure(options);
 
-    return through.obj(function (file, enc, cb) {
-        var contents;
-        var results;
+    let error;
 
+    return through.obj(function (file, enc, cb) {
         if (file.isNull()) {
             return cb(null, file);
         }
@@ -37,8 +35,8 @@ var lesshintPlugin = function (options) {
         }
 
         try {
-            contents = file.contents.toString();
-            results = lesshint.checkString(contents, file.path);
+            const contents = file.contents.toString();
+            const results = lesshint.checkString(contents, file.path);
 
             file.lesshint = {
                 resultCount: 0,
@@ -52,7 +50,7 @@ var lesshintPlugin = function (options) {
                 file.lesshint.results = results;
             }
         } catch (e) {
-            error = e.stack.replace('null:', file.path + ':');
+            error = e.stack.replace('null:', `${ file.path }:`);
         }
 
         this.push(file);
@@ -70,8 +68,7 @@ var lesshintPlugin = function (options) {
 };
 
 lesshintPlugin.reporter = function (reporter) {
-    var lesshint = new Lesshint();
-    var results = [];
+    const lesshint = new Lesshint();
 
     if (reporter) {
         reporter = lesshint.getReporter(reporter);
@@ -79,13 +76,15 @@ lesshintPlugin.reporter = function (reporter) {
         reporter = require('lesshint-reporter-stylish');
     }
 
-    return through.obj(function (file, enc, cb) {
+    let results = [];
+
+    return through.obj((file, enc, cb) => {
         if (file.lesshint && !file.lesshint.success) {
             results = results.concat(file.lesshint.results);
         }
 
         return cb(null, file);
-    }, function (cb) {
+    }, (cb) => {
         reporter.report(results);
 
         return cb();
@@ -93,10 +92,10 @@ lesshintPlugin.reporter = function (reporter) {
 };
 
 lesshintPlugin.failOnError = function () {
-    var errorCount = 0;
+    let errorCount = 0;
 
-    return through.obj(function (file, enc, cb) {
-        file.lesshint.results.forEach(function (result) {
+    return through.obj((file, enc, cb) => {
+        file.lesshint.results.forEach((result) => {
             if (result.severity === 'error') {
                 errorCount++;
             }
@@ -104,13 +103,11 @@ lesshintPlugin.failOnError = function () {
 
         return cb(null, file);
     }, function (cb) {
-        var message;
-
         if (!errorCount) {
             return;
         }
 
-        message = 'Failed with ' + errorCount + (errorCount === 1 ? ' error' : ' errors');
+        const message = `Failed with ${ errorCount } ` + (errorCount === 1 ? 'error' : 'errors');
 
         this.emit('error', new PluginError('gulp-lesshint', message, {
             name: 'LesshintError'

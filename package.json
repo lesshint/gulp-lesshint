@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "lesshint": "^2.0.0",
-    "lesshint-reporter-stylish": "^1.0.0",
+    "lesshint-reporter-stylish": "^2.0.0",
     "plugin-error": "^0.1.2",
     "through2": "^2.0.0"
   },

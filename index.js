@@ -104,6 +104,7 @@ lesshintPlugin.failOnError = function () {
         return cb(null, file);
     }, function (cb) {
         if (!errorCount) {
+            this.emit('end');
             return;
         }
 

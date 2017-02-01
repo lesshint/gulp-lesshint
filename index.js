@@ -104,8 +104,7 @@ lesshintPlugin.failOnError = function () {
         return cb(null, file);
     }, function (cb) {
         if (!errorCount) {
-            this.emit('end');
-            return;
+            return cb();
         }
 
         const message = `Failed with ${ errorCount } ` + (errorCount === 1 ? 'error' : 'errors');

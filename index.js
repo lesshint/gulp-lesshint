@@ -5,10 +5,8 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint');
 const through = require('through2');
 
-const lesshintPlugin = function (options) {
+const lesshintPlugin = function (options = {}) {
     const lesshint = new Lesshint();
-
-    options = options || {};
 
     if (options.configPath) {
         options = configLoader(options.configPath);
@@ -41,7 +39,7 @@ const lesshintPlugin = function (options) {
             file.lesshint = {
                 resultCount: 0,
                 results: [],
-                success: true,
+                success: true
             };
 
             if (results.length) {
@@ -59,7 +57,7 @@ const lesshintPlugin = function (options) {
     }, function (cb) {
         if (error) {
             this.emit('error', new PluginError('gulp-lesshint', error, {
-                showStack: false,
+                showStack: false
             }));
         }
 

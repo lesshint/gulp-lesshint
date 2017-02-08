@@ -1,4 +1,11 @@
 # Changelog
+## 3.0.0 (2017-02-08)
+* **Breaking** Dropped support for Node < 4.
+* Updated `lesshint` to `3.0.0`.
+* Complete ES6 rewrite.
+* Updated `lesshint-reporter-stylish` to `2.0.0`.
+* Fixed an issue where `failOnError` wouldn't end the stream when no errors were encountered.
+
 ## 2.1.0 (2016-12-01)
 * Added failOnError method.
 * Tests are run on Node 7.

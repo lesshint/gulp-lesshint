@@ -1,21 +1,14 @@
 'use strict';
 
-const configLoader = require('lesshint/lib/config-loader');
 const PluginError = require('plugin-error');
-const Lesshint = require('lesshint');
+const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
 const lesshintPlugin = function (options) {
     const lesshint = new Lesshint();
 
     options = options || {};
-
-    if (options.configPath) {
-        options = configLoader(options.configPath);
-    } else {
-        // Let lesshint find the options itself (from a .lesshintrc file)
-        options = configLoader();
-    }
+    options = lesshint.getConfig(options.configPath);
 
     lesshint.configure(options);
 

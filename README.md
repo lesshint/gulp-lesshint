@@ -31,7 +31,7 @@ gulp.task('lint', () => {
 
 ## Reporters
 If no reporter name is passed, the default `lesshint-reporter-stylish` will be used which just prints everything with different colors.
-If you wish to specify your own, please refer to the [lesshint reporter loading steps](https://github.com/lesshint/lesshint#the-reporter-loading-steps)
+If you wish to specify your own, please refer to the [lesshint reporter loading steps](https://github.com/lesshint/lesshint/blob/master/docs/user-guide/reporters.md#the-reporter-loading-steps)
 for the exact logic.
 
 ## Result

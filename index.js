@@ -85,15 +85,13 @@ lesshintPlugin.reporter = (reporter) => {
 };
 
 lesshintPlugin.failOnError = () => {
-    let errorCount = 0;
+    let errorCount;
 
     return through.obj((file, enc, cb) => {
         if (file.lesshint) {
-            file.lesshint.results.forEach((result) => {
-                if (result.severity === 'error') {
-                    errorCount++;
-                }
-            });
+            errorCount = file.lesshint.results.reduce((count, result) => {
+                return result.severity === 'error' ? count + 1 : count;
+            }, 0);
         }
 
         return cb(null, file);

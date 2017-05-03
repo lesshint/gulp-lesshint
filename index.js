@@ -88,11 +88,13 @@ lesshintPlugin.failOnError = () => {
     let errorCount = 0;
 
     return through.obj((file, enc, cb) => {
-        file.lesshint.results.forEach((result) => {
-            if (result.severity === 'error') {
-                errorCount++;
-            }
-        });
+        if (file.lesshint) {
+            file.lesshint.results.forEach((result) => {
+                if (result.severity === 'error') {
+                    errorCount++;
+                }
+            });
+        }
 
         return cb(null, file);
     }, function (cb) {

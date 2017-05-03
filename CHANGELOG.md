@@ -1,4 +1,8 @@
 # Changelog
+## 3.0.1 (2017-05-03)
+* Fixed an issue where `failOnError` would crash when the `excludeFiles` option was used.
+* Updated `lesshint` to `3.3.0`.
+
 ## 3.0.0 (2017-02-08)
 * **Breaking** Dropped support for Node < 4.
 * Updated `lesshint` to `3.0.0`.

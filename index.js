@@ -4,7 +4,7 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
-const lesshintPlugin = function (options) {
+const lesshintPlugin = (options) => {
     const lesshint = new Lesshint();
 
     options = options || {};
@@ -60,7 +60,7 @@ const lesshintPlugin = function (options) {
     });
 };
 
-lesshintPlugin.reporter = function (reporter) {
+lesshintPlugin.reporter = (reporter) => {
     const lesshint = new Lesshint();
 
     if (reporter) {
@@ -84,7 +84,7 @@ lesshintPlugin.reporter = function (reporter) {
     });
 };
 
-lesshintPlugin.failOnError = function () {
+lesshintPlugin.failOnError = () => {
     let errorCount = 0;
 
     return through.obj((file, enc, cb) => {

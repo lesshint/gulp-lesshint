@@ -90,7 +90,7 @@ lesshintPlugin.failOnError = () => {
     return through.obj((file, enc, cb) => {
         if (file.lesshint) {
             errorCount = file.lesshint.results.reduce((count, result) => {
-                return result.severity === 'error' ? count + 1 : count;
+                return count + (result.severity === 'error');
             }, 0);
         }
 

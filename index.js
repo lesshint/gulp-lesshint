@@ -15,15 +15,11 @@ const lesshintPlugin = (options) => {
     let error;
 
     return through.obj(function (file, enc, cb) {
-        if (file.isNull()) {
-            return cb(null, file);
-        }
-
         if (file.isStream()) {
             return cb(new PluginError('gulp-lesshint', 'Streaming not supported'));
         }
 
-        if (lesshint.isExcluded(file.path)) {
+        if (file.isNull() || lesshint.isExcluded(file.path)) {
             return cb(null, file);
         }
 
@@ -32,16 +28,10 @@ const lesshintPlugin = (options) => {
             const results = lesshint.checkString(contents, file.path);
 
             file.lesshint = {
-                resultCount: 0,
-                results: [],
-                success: true,
+                resultCount: results.length,
+                results,
+                success: !results.length,
             };
-
-            if (results.length) {
-                file.lesshint.success = false;
-                file.lesshint.resultCount = results.length;
-                file.lesshint.results = results;
-            }
         } catch (e) {
             error = e.stack.replace('null:', `${ file.path }:`);
         }
@@ -63,11 +53,8 @@ const lesshintPlugin = (options) => {
 lesshintPlugin.reporter = (reporter) => {
     const lesshint = new Lesshint();
 
-    if (reporter) {
-        reporter = lesshint.getReporter(reporter);
-    } else {
-        reporter = require('lesshint-reporter-stylish');
-    }
+    reporter = reporter || 'lesshint-reporter-stylish';
+    reporter = lesshint.getReporter(reporter);
 
     let results = [];
 

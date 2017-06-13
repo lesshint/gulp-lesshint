@@ -1,4 +1,10 @@
 # Changelog
+## 3.0.2 (2017-06-13)
+* Fixed an issue where the error count in `failOnError()` would sometimes be incorrect.
+* Tests are run on Node 8.
+* Updated `lesshint` to `3.3.1`.
+* Updated ESLint to `4.x`.
+
 ## 3.0.1 (2017-05-03)
 * Fixed an issue where `failOnError` would crash when the `excludeFiles` option was used.
 * Updated `lesshint` to `3.3.0`.

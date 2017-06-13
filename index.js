@@ -72,11 +72,11 @@ lesshintPlugin.reporter = (reporter) => {
 };
 
 lesshintPlugin.failOnError = () => {
-    let errorCount;
+    let errorCount = 0;
 
     return through.obj((file, enc, cb) => {
         if (file.lesshint) {
-            errorCount = file.lesshint.results.reduce((count, result) => {
+            errorCount += file.lesshint.results.reduce((count, result) => {
                 return count + (result.severity === 'error');
             }, 0);
         }

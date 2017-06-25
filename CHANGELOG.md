@@ -1,4 +1,7 @@
 # Changelog
+## 4.0.0 (2017-06-25)
+* Updated `lesshint` to `4.0`.
+
 ## 3.0.2 (2017-06-13)
 * Fixed an issue where the error count in `failOnError()` would sometimes be incorrect.
 * Tests are run on Node 8.

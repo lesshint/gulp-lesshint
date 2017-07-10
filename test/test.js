@@ -1,9 +1,9 @@
 'use strict';
 
 const PluginError = require('plugin-error');
+const Readable = require('stream').Readable;
 const lesshint = require('../');
 const assert = require('assert');
-const Stream = require('stream');
 const sinon = require('sinon');
 const File = require('vinyl');
 
@@ -194,7 +194,7 @@ describe('gulp-lesshint', () => {
             stream.write(new File({
                 base: __dirname,
                 path: __dirname + '/fixture.less',
-                contents: new Stream()
+                contents: new Readable()
             }));
         }, PluginError);
 

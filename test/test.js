@@ -55,7 +55,7 @@ describe('gulp-lesshint', () => {
 
         stream.on('data', () => {});
 
-        stream.on('error', (error) => {
+        stream.on('error', () => {
             assert(false);
         });
 
@@ -90,11 +90,13 @@ describe('gulp-lesshint', () => {
         reporterStream.on('data', () => {});
 
         reporterStream.once('end', () => {
+            /* eslint-disable no-console */
             assert.ok(console.log.called);
 
             console.log.restore();
 
             cb();
+            /* eslint-enable no-console */
         });
 
         lintStream.write(new File({
@@ -117,7 +119,7 @@ describe('gulp-lesshint', () => {
 
         stream.on('data', () => {});
 
-        stream.on('error', (error) => {
+        stream.on('error', () => {
             assert(false);
 
             cb();

@@ -36,7 +36,7 @@
     "eslint": "^4.0.0",
     "eslint-config-lesshint": "^1.0.3",
     "mocha": "^3.2.0",
-    "sinon": "^3.0.0",
+    "sinon": "^4.0.0",
     "vinyl": "^2.1.0"
   },
   "license": "MIT",

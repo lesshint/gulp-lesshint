@@ -4,11 +4,8 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
-const lesshintPlugin = (options) => {
+const lesshintPlugin = (options = {}) => {
     const lesshint = new Lesshint();
-
-    options = options || {};
-
     const config = lesshint.getConfig(options.configPath);
 
     lesshint.configure(config);
@@ -68,10 +65,9 @@ const lesshintPlugin = (options) => {
     });
 };
 
-lesshintPlugin.reporter = (reporter) => {
+lesshintPlugin.reporter = (reporter = 'lesshint-reporter-stylish') => {
     const lesshint = new Lesshint();
 
-    reporter = reporter || 'lesshint-reporter-stylish';
     reporter = lesshint.getReporter(reporter);
 
     let results = [];

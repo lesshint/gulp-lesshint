@@ -1,4 +1,10 @@
 # Changelog
+## 4.1.0 (2018-01-14)
+* Added a `maxWarnings` option.
+* Tests are run on Node 9.
+* Updated `vinyl` to `2.x`.
+* Updated dev dependencies.
+
 ## 4.0.0 (2017-06-25)
 * Updated `lesshint` to `4.0`.
 

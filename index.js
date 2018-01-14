@@ -8,11 +8,18 @@ const lesshintPlugin = (options) => {
     const lesshint = new Lesshint();
 
     options = options || {};
-    options = lesshint.getConfig(options.configPath);
 
-    lesshint.configure(options);
+    const config = lesshint.getConfig(options.configPath);
 
+    lesshint.configure(config);
+
+    let warningCount = 0;
+    let maxWarnings;
     let error;
+
+    if (options.maxWarnings) {
+        maxWarnings = parseInt(options.maxWarnings) || 0;
+    }
 
     return through.obj(function (file, enc, cb) {
         if (file.isStream()) {
@@ -26,6 +33,10 @@ const lesshintPlugin = (options) => {
         try {
             const contents = file.contents.toString();
             const results = lesshint.checkString(contents, file.path);
+
+            warningCount = results.reduce((sum, result) => {
+                return sum + (result.severity === 'warning' ? 1 : 0);
+            }, warningCount);
 
             file.lesshint = {
                 resultCount: results.length,
@@ -43,6 +54,13 @@ const lesshintPlugin = (options) => {
         if (error) {
             this.emit('error', new PluginError('gulp-lesshint', error, {
                 showStack: false,
+            }));
+        } else if (warningCount > maxWarnings) {
+            const count = (warningCount === 1 ? 'warning' : 'warnings');
+            const message = `Failed with ${ warningCount } ${ count }. Maximum allowed is ${ options.maxWarnings }.`;
+
+            this.emit('error', new PluginError('gulp-lesshint', message, {
+                name: 'LesshintError'
             }));
         }
 

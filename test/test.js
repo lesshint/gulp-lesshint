@@ -175,6 +175,32 @@ describe('gulp-lesshint', () => {
         lintStream.end();
     });
 
+    it('should fail the task when the maximum number of warnings is exceeded.', (cb) => {
+        const stream = lesshint({
+            maxWarnings: 1
+        });
+
+        stream.on('error', (error) => {
+            assert.equal(error.message, 'Failed with 3 warnings. Maximum allowed is 1.');
+
+            cb();
+        });
+
+        stream.on('end', cb);
+
+        stream.write(new File({
+            base: __dirname,
+            path: __dirname + '/fixture.less',
+            contents: new Buffer(`
+                .foo {
+                    color: red !important;
+                }
+            `)
+        }));
+
+        stream.end();
+    });
+
     it('should ignore null files', () => {
         const stream = lesshint();
 

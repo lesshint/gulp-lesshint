@@ -24,6 +24,8 @@ gulp.task('lint', () => {
 ## Options
 * `configPath`
     * Pass a path to a valid configuration file and stop lesshint from looking for a `.lesshintrc` file.
+* `maxWarnings`
+    * The maximum number of warnings to allow, before failing the task. Omit this option to always allow the task to pass.
 
 ## API
 * `lesshint.failOnError()`

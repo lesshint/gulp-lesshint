@@ -4,6 +4,9 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
+let warningCount = 0;
+let maxWarnings;
+
 const lesshintPlugin = (options) => {
     const lesshint = new Lesshint();
 
@@ -13,13 +16,9 @@ const lesshintPlugin = (options) => {
 
     lesshint.configure(config);
 
-    let warningCount = 0;
-    let maxWarnings;
-    let error;
+    maxWarnings = options.maxWarnings;
 
-    if (options.maxWarnings) {
-        maxWarnings = parseInt(options.maxWarnings) || 0;
-    }
+    let error;
 
     return through.obj(function (file, enc, cb) {
         if (file.isStream()) {
@@ -54,13 +53,6 @@ const lesshintPlugin = (options) => {
         if (error) {
             this.emit('error', new PluginError('gulp-lesshint', error, {
                 showStack: false,
-            }));
-        } else if (warningCount > maxWarnings) {
-            const count = (warningCount === 1 ? 'warning' : 'warnings');
-            const message = `Failed with ${ warningCount } ${ count }. Maximum allowed is ${ options.maxWarnings }.`;
-
-            this.emit('error', new PluginError('gulp-lesshint', message, {
-                name: 'LesshintError'
             }));
         }
 
@@ -101,11 +93,18 @@ lesshintPlugin.failOnError = () => {
 
         return cb(null, file);
     }, function (cb) {
-        if (!errorCount) {
+        if (!errorCount || warningCount - maxWarnings <= 0) {
             return cb();
         }
 
-        const message = `Failed with ${ errorCount } ` + (errorCount === 1 ? 'error' : 'errors');
+        let message;
+
+        if (warningCount > maxWarnings) {
+            const count = (warningCount === 1 ? 'warning' : 'warnings');
+            message = `Failed with ${ warningCount } ${ count }. Maximum allowed is ${ maxWarnings }.`;
+        } else if (errorCount > 0) {
+            message = `Failed with ${ errorCount } ` + (errorCount === 1 ? 'error' : 'errors');
+        }
 
         this.emit('error', new PluginError('gulp-lesshint', message, {
             name: 'LesshintError'

@@ -94,7 +94,7 @@ lesshintPlugin.failOnError = () => {
 
         return cb(null, file);
     }, function (cb) {
-        if (errorCount || warningCount - maxWarnings <= 0) {
+        if (!errorCount && warningCount - maxWarnings <= 0) {
             return cb();
         }
 

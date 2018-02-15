@@ -180,7 +180,13 @@ describe('gulp-lesshint', () => {
             maxWarnings: 1
         });
 
-        stream.on('error', (error) => {
+        const failStream = lesshint.failOnError();
+
+        stream.on('data', (file) => {
+            failStream.write(file);
+        });
+
+        failStream.on('error', (error) => {
             assert.equal(error.message, 'Failed with 3 warnings. Maximum allowed is 1.');
 
             cb();

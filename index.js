@@ -4,11 +4,12 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
-let warningCount = 0;
+let warningCount;
 let maxWarnings;
 
 const lesshintPlugin = (options) => {
     const lesshint = new Lesshint();
+    warningCount = 0;
 
     options = options || {};
 

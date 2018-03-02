@@ -27,7 +27,7 @@
     "index.js"
   ],
   "dependencies": {
-    "lesshint": "^4.0.0",
+    "lesshint": "^5.0.0",
     "lesshint-reporter-stylish": "^2.0.0",
     "plugin-error": "^1.0.0",
     "through2": "^2.0.0"

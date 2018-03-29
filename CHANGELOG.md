@@ -1,4 +1,11 @@
 # Changelog
+## 5.0.0 (2018-03-29)
+* **Breaking** Dropped support for Node < 6.
+* **Breaking** Updated `lesshint` to `5.0`.
+* Updated `lesshint-reporter-stylish` to `3.0`.
+* Updated `plugin-error` to `1.0`.
+* Updated dev dependencies.
+
 ## 4.1.0 (2018-01-14)
 * Added a `maxWarnings` option.
 * Tests are run on Node 9.

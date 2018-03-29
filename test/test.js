@@ -181,7 +181,7 @@ describe('gulp-lesshint', () => {
         });
 
         stream.on('error', (error) => {
-            assert.equal(error.message, 'Failed with 3 warnings. Maximum allowed is 1.');
+            assert.equal(error.message, 'Failed with 2 warnings. Maximum allowed is 1.');
 
             cb();
         });

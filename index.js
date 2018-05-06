@@ -4,6 +4,8 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
+const { isExcluded } = require('./utils');
+
 const lesshintPlugin = (options = {}) => {
     const lesshint = new Lesshint();
     const config = lesshint.getConfig(options.configPath);
@@ -23,7 +25,7 @@ const lesshintPlugin = (options = {}) => {
             return cb(new PluginError('gulp-lesshint', 'Streaming not supported'));
         }
 
-        if (file.isNull() || lesshint.isExcluded(file.path)) {
+        if (file.isNull() || isExcluded(config, file.path)) {
             return cb(null, file);
         }
 

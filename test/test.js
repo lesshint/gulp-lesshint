@@ -30,7 +30,7 @@ describe('gulp-lesshint', () => {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo{
                     color: red;
                 }
@@ -40,7 +40,7 @@ describe('gulp-lesshint', () => {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture2.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo {
                     color:red;
                 }
@@ -63,7 +63,7 @@ describe('gulp-lesshint', () => {
 
         stream.write(new File({
             path: __dirname + '/fixture.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo {
                     color: red;
                 }
@@ -102,7 +102,7 @@ describe('gulp-lesshint', () => {
         lintStream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo{
                     color: red;
                 }
@@ -130,7 +130,7 @@ describe('gulp-lesshint', () => {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo {
                     color: red;
                 }
@@ -165,7 +165,7 @@ describe('gulp-lesshint', () => {
         lintStream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo {
                     color:red;
                 }
@@ -191,7 +191,7 @@ describe('gulp-lesshint', () => {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/fixture.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo {
                     color: red !important;
                 }
@@ -235,7 +235,7 @@ describe('gulp-lesshint', () => {
         stream.write(new File({
             base: __dirname,
             path: __dirname + '/exclude.less',
-            contents: new Buffer(`
+            contents: Buffer.from(`
                 .foo{
                     color: red;
                 }

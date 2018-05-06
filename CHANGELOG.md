@@ -1,4 +1,11 @@
 # Changelog
+## 5.0.1 (2018-05-06)
+* Created our own check for excluded files.
+* Updated `lesshint` to `5.1.0`.
+* Updated `lesshint-reporter-stylish` to `3.0`.
+* CI tests are run on Node 10.
+* Updated dev dependencies.
+
 ## 5.0.0 (2018-03-29)
 * **Breaking** Dropped support for Node < 6.
 * **Breaking** Updated `lesshint` to `5.0`.

@@ -1,4 +1,7 @@
 # Changelog
+## 5.0.2 (2018-05-07)
+* Add files missing from `5.0.1`.
+
 ## 5.0.1 (2018-05-06)
 * Created our own check for excluded files.
 * Updated `lesshint` to `5.1.0`.

@@ -24,7 +24,8 @@
     "linter"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "utils.js"
   ],
   "dependencies": {
     "lesshint": "^5.1.0",

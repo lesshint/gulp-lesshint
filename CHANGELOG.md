@@ -1,4 +1,10 @@
 # Changelog
+## 6.0.0 (2018-12-19)
+* Updated `lesshint` to `6.0.0`.
+* CI tests are run on Node 11.
+* Updated `through2` to `3.0.0`.
+* Updated dev dependencies.
+
 ## 5.0.2 (2018-05-07)
 * Add files missing from `5.0.1`.
 

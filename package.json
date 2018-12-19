@@ -28,7 +28,7 @@
     "utils.js"
   ],
   "dependencies": {
-    "lesshint": "^5.1.0",
+    "lesshint": "^6.0.0",
     "lesshint-reporter-stylish": "^3.0.0",
     "minimatch": "^3.0.4",
     "plugin-error": "^1.0.0",

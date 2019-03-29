@@ -4,7 +4,7 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
-const { isExcluded } = require('./utils');
+const { getSeverityCount, isError, isExcluded, isWarning, pluralize } = require('./utils');
 
 const lesshintPlugin = (options = {}) => {
     const lesshint = new Lesshint();
@@ -33,9 +33,7 @@ const lesshintPlugin = (options = {}) => {
             const contents = file.contents.toString();
             const results = lesshint.checkString(contents, file.path);
 
-            warningCount = results.reduce((sum, result) => {
-                return sum + (result.severity === 'warning' ? 1 : 0);
-            }, warningCount);
+            warningCount += getSeverityCount(results, isWarning);
 
             file.lesshint = {
                 resultCount: results.length,
@@ -55,11 +53,10 @@ const lesshintPlugin = (options = {}) => {
                 showStack: false,
             }));
         } else if (warningCount > maxWarnings) {
-            const count = (warningCount === 1 ? 'warning' : 'warnings');
-            const message = `Failed with ${ warningCount } ${ count }. Maximum allowed is ${ options.maxWarnings }.`;
+            const message = `Failed with ${ warningCount } ${ pluralize('warning', warningCount) }. Maximum allowed is ${ options.maxWarnings }.`;
 
             this.emit('error', new PluginError('gulp-lesshint', message, {
-                name: 'LesshintError'
+                name: 'LesshintError',
             }));
         }
 
@@ -92,9 +89,7 @@ lesshintPlugin.failOnError = () => {
 
     return through.obj((file, enc, cb) => {
         if (file.lesshint) {
-            errorCount += file.lesshint.results.reduce((count, result) => {
-                return count + (result.severity === 'error');
-            }, 0);
+            errorCount += getSeverityCount(file.lesshint.results, isError);
         }
 
         return cb(null, file);
@@ -103,10 +98,10 @@ lesshintPlugin.failOnError = () => {
             return cb();
         }
 
-        const message = `Failed with ${ errorCount } ` + (errorCount === 1 ? 'error' : 'errors');
+        const message = `Failed with ${ errorCount } ${ pluralize('error', errorCount) }`;
 
         this.emit('error', new PluginError('gulp-lesshint', message, {
-            name: 'LesshintError'
+            name: 'LesshintError',
         }));
 
         return cb();

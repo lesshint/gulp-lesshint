@@ -108,4 +108,28 @@ lesshintPlugin.failOnError = () => {
     });
 };
 
+lesshintPlugin.failOnWarning = () => {
+    let warningCount = 0;
+
+    return through.obj((file, enc, cb) => {
+        if (file.lesshint) {
+            warningCount += severityCount(file.lesshint.results, isWarning);
+        }
+
+        return cb(null, file);
+    }, function (cb) {
+        if (!warningCount) {
+            return cb();
+        }
+
+        const message = `Failed with ${ warningCount } ${ pluralize('warning', warningCount) }`;
+
+        this.emit('error', new PluginError('gulp-lesshint', message, {
+            name: 'LesshintError',
+        }));
+
+        return cb();
+    });
+};
+
 module.exports = lesshintPlugin;

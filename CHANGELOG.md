@@ -1,4 +1,8 @@
 # Changelog
+## 6.1.0 (2019-03-31)
+* Added a `failOnWarning` method.
+* Updated dev dependencies.
+
 ## 6.0.0 (2018-12-19)
 * Updated `lesshint` to `6.0.0`.
 * CI tests are run on Node 11.

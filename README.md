@@ -17,7 +17,7 @@ gulp.task('lint', () => {
             // Options
         }))
         .pipe(lesshint.reporter('reporter-name')) // Leave empty to use the default, "stylish"
-        .pipe(lesshint.failOnError()); // Use this to fail the task on lint errors
+        .pipe(lesshint.failOnError()) // Use this to fail the task on lint errors
         .pipe(lesshint.failOnWarning()); // Use this to fail the task on lint warnings
 });
 ```

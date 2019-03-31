@@ -4,7 +4,7 @@ const PluginError = require('plugin-error');
 const Lesshint = require('lesshint').Lesshint;
 const through = require('through2');
 
-const { getSeverityCount, isError, isExcluded, isWarning, pluralize } = require('./utils');
+const { isError, isExcluded, isWarning, pluralize, severityCount } = require('./utils');
 
 const lesshintPlugin = (options = {}) => {
     const lesshint = new Lesshint();
@@ -33,7 +33,7 @@ const lesshintPlugin = (options = {}) => {
             const contents = file.contents.toString();
             const results = lesshint.checkString(contents, file.path);
 
-            warningCount += getSeverityCount(results, isWarning);
+            warningCount += severityCount(results, isWarning);
 
             file.lesshint = {
                 resultCount: results.length,
@@ -89,7 +89,7 @@ lesshintPlugin.failOnError = () => {
 
     return through.obj((file, enc, cb) => {
         if (file.lesshint) {
-            errorCount += getSeverityCount(file.lesshint.results, isError);
+            errorCount += severityCount(file.lesshint.results, isError);
         }
 
         return cb(null, file);
@@ -99,6 +99,30 @@ lesshintPlugin.failOnError = () => {
         }
 
         const message = `Failed with ${ errorCount } ${ pluralize('error', errorCount) }`;
+
+        this.emit('error', new PluginError('gulp-lesshint', message, {
+            name: 'LesshintError',
+        }));
+
+        return cb();
+    });
+};
+
+lesshintPlugin.failOnWarning = () => {
+    let warningCount = 0;
+
+    return through.obj((file, enc, cb) => {
+        if (file.lesshint) {
+            warningCount += severityCount(file.lesshint.results, isWarning);
+        }
+
+        return cb(null, file);
+    }, function (cb) {
+        if (!warningCount) {
+            return cb();
+        }
+
+        const message = `Failed with ${ warningCount } ${ pluralize('warning', warningCount) }`;
 
         this.emit('error', new PluginError('gulp-lesshint', message, {
             name: 'LesshintError',

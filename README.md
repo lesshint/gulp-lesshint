@@ -17,7 +17,8 @@ gulp.task('lint', () => {
             // Options
         }))
         .pipe(lesshint.reporter('reporter-name')) // Leave empty to use the default, "stylish"
-        .pipe(lesshint.failOnError()); // Use this to fail the task on lint errors
+        .pipe(lesshint.failOnError()) // Use this to fail the task on lint errors
+        .pipe(lesshint.failOnWarning()); // Use this to fail the task on lint warnings
 });
 ```
 
@@ -30,6 +31,8 @@ gulp.task('lint', () => {
 ## API
 * `lesshint.failOnError()`
     * Use this to fail the task when there are at least one lint result with a severity of `error`.
+* `lesshint.failOnWarning()`
+    * Use this to fail the task when there are at least one lint result with a severity of `warning`.**NOTE**: this does not respect the `maxWarnings` option.
 
 ## Reporters
 If no reporter name is passed, the default `lesshint-reporter-stylish` will be used which just prints everything with different colors.

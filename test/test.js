@@ -140,7 +140,7 @@ describe('gulp-lesshint', () => {
         stream.end();
     });
 
-    it('should emit errors when asked to', (cb) => {
+    it('should fail on errors when asked to', (cb) => {
         const lintStream = lesshint({
             configPath: './test/config.json'
         });
@@ -168,6 +168,41 @@ describe('gulp-lesshint', () => {
             contents: Buffer.from(`
                 .foo {
                     color:red;
+                }
+            `)
+        }));
+
+        lintStream.end();
+    });
+
+    it('should fail on warnings when asked to', (cb) => {
+        const lintStream = lesshint({
+            configPath: './test/config.json'
+        });
+        const failStream = lesshint.failOnWarning();
+
+        lintStream.on('data', (file) => {
+            failStream.write(file);
+        });
+
+        lintStream.once('end', () => {
+            failStream.end();
+        });
+
+        failStream.on('data', () => {});
+
+        failStream.on('error', (error) => {
+            assert.equal(error.name, 'LesshintError');
+
+            cb();
+        });
+
+        lintStream.write(new File({
+            base: __dirname,
+            path: __dirname + '/fixture.less',
+            contents: Buffer.from(`
+                .foo {
+                    color: red !important;
                 }
             `)
         }));
